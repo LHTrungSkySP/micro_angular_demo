@@ -10,9 +10,8 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [],
   imports: [
-    BrowserModule,
+    CommonModule,
     RouterModule.forChild(routes)
   ],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }

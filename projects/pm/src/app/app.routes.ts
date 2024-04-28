@@ -4,6 +4,6 @@ import { TestComponent } from './test/test.component';
 export const routes: Routes = [
     {
         path: 'test',
-        component: TestComponent
+        loadChildren: () => import('./test/test.module').then(m=>m.TestModule)
     }
 ];
