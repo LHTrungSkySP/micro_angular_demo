@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { routes } from './app.routes';
-import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 
 
@@ -11,7 +8,12 @@ import { CommonModule } from '@angular/common';
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild([
+      {
+        path: '',
+        loadChildren: () => import('./remote-entry/remote-entry.module').then(m => m.RemoteEntryModule)
+      }
+    ])
   ],
 })
 export class AppModule { }

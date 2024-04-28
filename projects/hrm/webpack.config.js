@@ -1,34 +1,15 @@
-const { ModuleFederationPlugin } = require('webpack').container;
+const { shareAll, withModuleFederationPlugin } = require('@angular-architects/module-federation/webpack');
 
-/** @type {require('webpack').Configuration} */
-module.exports = {
-  output: {
-    publicPath: 'auto', // we setup the `publicHost` in `angular.json` file
-    uniqueName: 'hrm',
+module.exports = withModuleFederationPlugin({
+
+  name: 'hrm',
+
+  exposes: {
+    './Module': './projects/hrm/src/app/remote-entry/remote-entry.module.ts',
   },
-  optimization: {
-    runtimeChunk: false,
+
+  shared: {
+    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
   },
-  experiments: {
-    // Allow output javascript files as module source type.
-    outputModule: true,
-  },
-  plugins: [
-    new ModuleFederationPlugin({
-      name: 'hrm',
-      library: {
-        // because Angular v14 will output ESModule
-        type: 'module',
-      },
-      filename: 'remoteEntry.js',
-      exposes: {
-        './hrmModule': './projects/hrm/src/app/app.module.ts',
-      },
-      /**
-       * shared can be an object of type SharedConfig
-       * you can change this to select something can be shared
-       */
-       shared: ['@angular/core', '@angular/common', '@angular/router'],
-    }),
-  ],
-};
+
+});
